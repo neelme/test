@@ -6,22 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // добавлять элементы на вкладке "Дизайн" (сбоку). Чтобы туда зайти кликни два раза на mainwindow.ui
-    //после того как добавил элементы нужно собрать проект, чтобы они появились в коде
-
-
-     //обращаться к добавленным элементам через переменную ui
-
-    ui->pushButton->setText("ClickMe");
-
-    ui->label->setText("-");
-
-
-    //прочитай в книжке, которую я тебе скинул подорбнее про сигналы и слоты , вот пример
-
-    connect(ui->pushButton, &QPushButton::clicked,this,&MainWindow::onClickMe);
-//&QPushButton::clicked - означает адрес функции
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
+    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MainWindow::on_pushButton_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -29,10 +15,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onClickMe()
+
+void MainWindow::on_pushButton_clicked()
 {
-    lable_number++;
-    QString text = QString::number(lable_number); //так переводить число в строку
-    ui->label->setText(text);
+    QString text = ui->lineEdit->text();
+    ui->textBrowser->append(text);
+    ui->lineEdit->clear();
+}
+
+void MainWindow::on_pushButton_pressed()
+{
+
 }
 
